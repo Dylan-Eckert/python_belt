@@ -38,12 +38,11 @@ def quotes(request):
 def addQuote(request):
     if 'user_id' not in request.session:
         return redirect('/login_register/')
-    quote = Quote.objects.newQuote(request.POST)
-    # if request.POST == 'POST':
-    #     res = Quote.objects.quoteIsValid(request.POST)
-    #     if res['status']:
-            # quote = Quote.objects.newQuote(request.POST)
-        # else:
-        #     for error in res['errors']:
-        #         messages.error(request, error)
+
+    res = Quote.objects.quoteIsValid(request.POST)
+    if res['status']:
+        quote = Quote.objects.newQuote(request.POST)
+    else:
+        for error in res['errors']:
+            messages.error(request, error)
     return redirect('/quotes')
