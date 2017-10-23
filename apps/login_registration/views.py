@@ -10,43 +10,34 @@ from .models import *
 #                      RENDER
 # ===================================================
 
-def index(req):
-    return render(req, 'login_registration/index.html')
-
-def home(req):
-    if 'user_id' not in req.session:
-        return redirect('/')
-
-    users = User.objects.all()
-    data = {'users': users}
-
-    return render(req, 'login_registration/home.html', data)
+def index(request):
+    return render(request, 'login_registration/index.html')
 
 # ===================================================
 #                    PROCESSES
 # ===================================================
-def login(req):
-    user = User.objects.login(req.POST)
+def login(request):
+    user = User.objects.login(request.POST)
     if user:
-        req.session['user_id'] = user.id
-        return redirect('/home')
+        request.session['user_id'] = user.id
+        return redirect('/')
 
-    messages.error(req, 'Email or Password invalid')
-    return redirect('/')
+    messages.error(request, 'Email or Password invalid')
+    return redirect('/login_register/')
 
-def registration(req):
-    res = User.objects.userIsValid(req.POST)
+def registration(request):
+    res = User.objects.userIsValid(request.POST)
     if res['status']:
-        user = User.objects.newUser(req.POST)
-        req.session['user_id'] = user.id
-        return redirect('/home')
+        user = User.objects.newUser(request.POST)
+        request.session['user_id'] = user.id
+        return redirect('/')
     else:
         for error in res['errors']:
-            messages.error(req, error)
+            messages.error(request, error)
 
-    return redirect('/')
+    return redirect('/login_register/')
 
-def logout(req):
-    req.session.clear()
+def logout(request):
+    request.session.clear()
 
-    return redirect('/')
+    return redirect('/login_register/')
