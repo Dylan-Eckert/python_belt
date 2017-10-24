@@ -40,7 +40,7 @@ def items(request):
     return render(request, 'belt_app/items.html', data)
 
 def addNewItem(request):
-    return render(request, 'belt_app/addNewItem.html')
+    return render(request, 'belt_app/addNewitem.html')
 
 # ===============================================
 #                   PROCESSES
