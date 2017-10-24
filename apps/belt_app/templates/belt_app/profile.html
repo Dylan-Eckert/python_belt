@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Item Profile</title>
+  </head>
+  <body>
+    <h1>{{item.name}}</h1>
+    <a href="/items">Wishlist Galore Dashboard</a>
+    <a href="/login_register/logout">Logout</a>
+    <hr>
+    <h3>Users who added this item to their wishlist:</h3>
+    <div class="item">
+      {% for user in item.wishlisted.all %}
+      <p>{{user.username}}</p>
+      {% endfor %}
+    </div>
+  </body>
+</html>

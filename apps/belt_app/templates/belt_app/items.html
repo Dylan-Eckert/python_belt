@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wishlist Galore Dashboard</title>
+  </head>
+
+  <body>
+    <h1>Welcome to the Wishlist Galore homepage, {{user.name}}!</h1>
+    <a href="/login_register/logout">Logout</a>
+    <hr>
+    <h4>Your Wishlist</h4>
+    <table id="user_wishlist">
+      <tr>
+        <th>Item</th>
+        <th>Added By</th>
+        <th>Date Added</th>
+        <th>Action</th>
+      </tr>
+      {% for item in user.wishlist.all %}
+        <tr>
+          <td><a href="profiles/{{item.id}}">{{item.name}}</a></td>
+          <td>{{item.user.username}}</td>
+          <td>{{item.created_at}}</td>
+          <td>
+            {% if user.id == item.user.id %}
+            <a href="items/deleteitem/{{item.id}}">Delete Item</a>
+            {% else %}
+            <a href="items/wishlist/rem/{{item.id}}">Remove from My Wishlist</a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+    <hr>
+    <h4>Other User's Wishlist Items</h4>
+    <table id="other_wishlists">
+      <tr>
+        <th>Item</th>
+        <th>Added By</th>
+        <th>Date Added</th>
+        <th>Action</th>
+      </tr>
+      {% for item in items %}
+        <tr>
+          <td><a href="profiles/{{item.id}}">{{item.name}}</a></td>
+          <td>{{item.user.username}}</td>
+          <td>{{item.created_at}}</td>
+          <td><a href="items/wishlist/add/{{item.id}}">Add to My Wishlist</a></td>
+        </tr>
+      {% endfor %}
+    </table>
+    <hr>
+    <h4><a href="items/newitem">Add a new Item</a></h4>
+  </body>
+</html>
